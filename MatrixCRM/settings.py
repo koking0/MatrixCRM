@@ -116,6 +116,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILE_DIRS = [
+    os.path.join(BASE_DIR, "web/static")
+]
 
 # ----------------------------------- 权限配置 -----------------------------------
 RBAC_USER_MODLE_CLASS = "web.models.UserInfo"
