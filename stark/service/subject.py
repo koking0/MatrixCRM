@@ -103,7 +103,7 @@ class SearchGroupRow(object):
                 if value in multi_value_list:
                     multi_value_list.remove(value)
                     query_dict.setlist(self.option.field, multi_value_list)
-                    yield "<a class='active' href='?%s'>%s</a>" % (query_dict.urlencode(), text)
+                    yield "<a class='active btn' href='?%s'>%s</a>" % (query_dict.urlencode(), text)
                 else:
                     multi_value_list.append(value)
                     query_dict.setlist(self.option.field, multi_value_list)
@@ -290,7 +290,6 @@ class StarkHandler(object):
         :return:
         """
         condition = {}
-        # ?depart=1&gender=2&page=123&q=999
         for option in self.get_search_group():
             if option.is_multi:
                 values_list = request.GET.getlist(option.field)  # tags=[1,2]

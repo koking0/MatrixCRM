@@ -1,67 +1,53 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 import re
-from django.utils.deprecation import MiddlewareMixin
-from django.shortcuts import HttpResponse
 from django.conf import settings
+from django.shortcuts import redirect, render
+from django.utils.deprecation import MiddlewareMixin
 
 
 class RbacMiddleware(MiddlewareMixin):
     """
-    用户权限信息校验
+    用户权限信息校验中间件
     """
 
     def process_request(self, request):
         """
-        当用户请求刚进入时候出发执行
-        :param request:
-        :return:
+        当用户请求进入时执行
         """
+        # 1.获取当前用户请求的 URL
+        currentURL = request.path_info
 
-        """
-        1. 获取当前用户请求的URL
-        2. 获取当前用户在session中保存的权限列表 ['/customer/list/','/customer/list/(?P<cid>\\d+)/']
-        3. 权限信息匹配
-        """
-        current_url = request.path_info
+        # 2.验证 URL 是否在白名单
         for valid_url in settings.VALID_URL_LIST:
-            if re.match(valid_url, current_url):
-                # 白名单中的URL无需权限验证即可访问
-                return None
+            if re.match(valid_url, currentURL):
+                return None  # 返回 None 将继续执行该中间件之后的操作
 
-        permission_dict = request.session.get(settings.PERMISSION_SESSION_KEY)
-        if not permission_dict:
-            return HttpResponse('未获取到用户权限信息，请登录！')
+        # 3.获取当前用户在 session 中的权限信息
+        permissionDict = request.session.get(settings.PERMISSION_SESSION_KEY)
+        if not permissionDict:
+            return redirect('/login/')
 
-        url_record = [
-            {'title': '首页', 'url': '#'}
-        ]
+        URLRecord = []  # 用于显示当前访问路径
 
-        # 此处代码进行判断
+        # 4.判断是否为仅需登录但无需权限就可访问到的 URL
         for url in settings.NO_PERMISSION_LIST:
-            if re.match(url, request.path_info):
-                # 需要登录，但无需权限校验
+            if re.match(url, currentURL):
                 request.current_selected_permission = 0
-                request.breadcrumb = url_record
-
+                request.breadcrumb = URLRecord
                 return None
 
-        flag = False
-
-        for item in permission_dict.values():
-            reg = "^%s$" % item['url']
-            if re.match(reg, current_url):
-                flag = True
-                request.current_selected_permission = item['pid'] or item['id']
-                if not item['pid']:
-                    url_record.extend([{'title': item['title'], 'url': item['url'], 'class': 'active'}])
-                else:
-                    url_record.extend([
-                        {'title': item['p_title'], 'url': item['p_url']},
-                        {'title': item['title'], 'url': item['url'], 'class': 'active'},
-                    ])
-                request.breadcrumb = url_record
+        # 5.判断用户当前访问的 URL 是否在权限列表中
+        for permission in permissionDict.values():
+            if re.match("^%s$" % permission['url'], currentURL):
+                # 5.1、设置选中二级菜单
+                request.current_selected_permission = permission['pid'] or permission['id']
+                # 5.2、如果存在 pid，说明是三级菜单，否则是二级菜单
+                URLRecord.extend([{'title': permission['p_title'], 'url': permission['p_url']},
+                                  {'title': permission['title'], 'url': permission['url']}]
+                                 if permission['pid'] else
+                                 [{'title': permission['title'], 'url': permission['url']}])
+                request.breadcrumb = URLRecord
                 break
-
-        if not flag:
-            return HttpResponse('无权访问')
+        else:
+            return render(request, "rbac/404.html")

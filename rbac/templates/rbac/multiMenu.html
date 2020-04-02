@@ -8,16 +8,16 @@
                         <span>主页</span>
                     </a>
                 </li>
-                {% for item in menu_dict.values %}
-                    <li class="{{ item.class }}">
+                {% for firstMenu in menuDict.values %}
+                    <li class="{{ firstMenu.class }}">
                         <a>
-                            <i class="fa {{ item.icon }}" aria-hidden="true"></i>
-                            <span>{{ item.title }}</span>
+                            <i class="fa {{ firstMenu.icon }}" aria-hidden="true"></i>
+                            <span>{{ firstMenu.title }}</span>
                         </a>
                         <ul class="nav nav-children">
-                            {% for per in item.children %}
-                                <li class="{{ per.class }}">
-                                    <a href="{{ per.url }}">{{ per.title }}</a>
+                            {% for secondMenu in firstMenu.children %}
+                                <li class="{{ secondMenu.class }}">
+                                    <a href="{{ secondMenu.url }}">{{ secondMenu.title }}</a>
                                 </li>
                             {% endfor %}
                         </ul>
@@ -25,9 +25,7 @@
                 {% endfor %}
             </ul>
         </nav>
-
         <hr class="separator"/>
-
         <div class="sidebar-widget widget-tasks">
             <div class="widget-header">
                 <h6>Projects</h6>
@@ -41,9 +39,7 @@
                 </ul>
             </div>
         </div>
-
         <hr class="separator"/>
-
         <div class="sidebar-widget widget-stats">
             <div class="widget-header">
                 <h6>Company Stats</h6>
@@ -88,5 +84,4 @@
             </div>
         </div>
     </div>
-
 </div>

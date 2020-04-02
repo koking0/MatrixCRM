@@ -22,36 +22,36 @@ def static_menu(request):
     return {'menu_list': menu_list}
 
 
-@register.inclusion_tag('rbac/multi_menu.html')
-def multi_menu(request):
+@register.inclusion_tag('rbac/multiMenu.html')
+def multiMenu(request):
     """
     创建二级菜单
-    :return:
     """
-    menu_dict = request.session[settings.MENU_SESSION_KEY]
-
-    # 对字典的key进行排序
-    key_list = sorted(menu_dict)
-
-    # 空的有序字典
-    ordered_dict = OrderedDict()
-
-    for key in key_list:
-        val = menu_dict[key]
-        val['class'] = 'nav-parent'
-
-        for per in val['children']:
-            if per['id'] == request.current_selected_permission:
-                per['class'] = 'nav-active'
-                val['class'] = 'nav-parent nav-expanded nav-active'
-        ordered_dict[key] = val
-
-    return {'menu_dict': ordered_dict}
+    # 1.获取 session 中的菜单字典
+    menuDict = request.session[settings.MENU_SESSION_KEY]
+    # 2.对菜单字典的key进行排序
+    keyList = sorted(menuDict)
+    # 3.将菜单字典整理到有序字典中
+    orderedDict = OrderedDict()
+    for firstMenuKey in keyList:
+        firstMenu = menuDict[firstMenuKey]
+        firstMenu['class'] = 'nav-parent'
+        for secondMenu in firstMenu['children']:
+            if secondMenu['id'] == request.current_selected_permission:
+                secondMenu['class'] = 'nav-active'
+                firstMenu['class'] = 'nav-parent nav-expanded nav-active'
+        orderedDict[firstMenuKey] = firstMenu
+    return {'menuDict': orderedDict}
 
 
 @register.inclusion_tag('rbac/breadcrumb.html')
 def breadcrumb(request):
-    return {'record_list': request.breadcrumb}
+    """
+    创建路径导航
+    """
+    if len(request.breadcrumb) > 1:
+        request.breadcrumb[-1]["class"] = "active"
+    return {'recordList': request.breadcrumb}
 
 
 @register.filter

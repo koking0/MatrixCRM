@@ -2806,7 +2806,6 @@ body a, body a:focus, body a:hover, body a:active, body a:visited {
 ul,
 ol {
     margin-bottom: 0;
-    padding-left: 27px;
 }
 
 blockquote.primary {

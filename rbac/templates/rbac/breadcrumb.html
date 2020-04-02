@@ -1,14 +1,14 @@
-<ol class="breadcrumbs">
+<ol class="breadcrumb" >
     <li>
-        <a href="">
+        <a href="{% url 'index' %}">
             <i class="fa fa-home"></i>
         </a>
     </li>
-    {% for item in record_list %}
+    {% for item in recordList %}
         {% if item.class %}
-            <li class="active">{{ item.title }}</li>
+            <li class="{{ item.class }}"><span style="font-size: 17px; line-height: 50px;">{{ item.title }}</span></li>
         {% else %}
-            <li><a href="{{ item.url }}">{{ item.title }}</a></li>
+            <li><a href="{{ item.url }}" style="font-size: 17px; line-height: 50px;">{{ item.title }}</a></li>
         {% endif %}
     {% endfor %}
 </ol>
