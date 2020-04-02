@@ -3,7 +3,7 @@
 from django.conf.urls import url
 from django.shortcuts import HttpResponse
 from django import forms
-from stark.service.v1 import StarkHandler, get_choice_text, StarkModelForm
+from stark.service.subject import StarkHandler, get_choice_text, StarkModelForm
 from web import models
 
 from .base import PermissionHandler

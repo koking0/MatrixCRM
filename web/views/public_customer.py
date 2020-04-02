@@ -4,7 +4,7 @@ from django.utils.safestring import mark_safe
 from django.conf.urls import url
 from django.shortcuts import HttpResponse, render
 from django.db import transaction
-from stark.service.v1 import StarkHandler, get_choice_text, get_m2m_text, StarkModelForm
+from stark.service.subject import StarkHandler, get_choice_text, get_m2m_text, StarkModelForm
 from web import models
 from .base import PermissionHandler
 

@@ -15,7 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from stark.service.v1 import site
+from django.views.generic import RedirectView
+
+from stark.service.subject import site
 from web.views import account
 
 urlpatterns = [
@@ -25,4 +27,5 @@ urlpatterns = [
     path('logout/', account.logout, name="logout"),
     path('index/', account.index, name="index"),
     path('rbac/', include(('rbac.urls', "rbac"), namespace='rbac')),
+    path('favicon.ico', RedirectView.as_view(url='static/images/favicon.ico')),
 ]

@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 
 from django.conf.urls import url
-from stark.service.v1 import StarkHandler, get_choice_text, get_datetime_text
+from stark.service.subject import StarkHandler, get_choice_text, get_datetime_text
 from .base import PermissionHandler
 
 

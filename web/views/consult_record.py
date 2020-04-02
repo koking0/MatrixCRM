@@ -4,7 +4,7 @@ import copy
 from django.conf.urls import url
 from django.utils.safestring import mark_safe
 from django.shortcuts import HttpResponse
-from stark.service.v1 import StarkHandler, StarkModelForm
+from stark.service.subject import StarkHandler, StarkModelForm
 from web import models
 from .base import PermissionHandler
 

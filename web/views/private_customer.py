@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 from django.utils.safestring import mark_safe
 from django.urls import reverse
-from stark.service.v1 import StarkHandler, get_m2m_text, get_choice_text, StarkModelForm
+from stark.service.subject import StarkHandler, get_m2m_text, get_choice_text, StarkModelForm
 from web import models
 from .base import PermissionHandler
 

@@ -6,9 +6,9 @@ from django.core.exceptions import ValidationError
 from django.utils.safestring import mark_safe
 from django.conf.urls import url
 from django.shortcuts import HttpResponse, render, redirect
-from stark.service.v1 import StarkHandler, get_choice_text, StarkModelForm, StarkForm, Option
+from stark.service.subject import StarkHandler, get_choice_text, StarkModelForm, StarkForm, Option
 from web import models
-from web.utils.md5 import gen_md5
+from web.utils.md5 import getMd5
 from .base import PermissionHandler
 
 
@@ -28,7 +28,7 @@ class UserInfoAddModelForm(StarkModelForm):
 
     def clean(self):
         password = self.cleaned_data['password']
-        self.cleaned_data['password'] = gen_md5(password)
+        self.cleaned_data['password'] = getMd5(password)
         return self.cleaned_data
 
 
@@ -51,7 +51,7 @@ class ResetPasswordForm(StarkForm):
 
     def clean(self):
         password = self.cleaned_data['password']
-        self.cleaned_data['password'] = gen_md5(password)
+        self.cleaned_data['password'] = getMd5(password)
         return self.cleaned_data
 
 

@@ -4,7 +4,7 @@
 from django.conf.urls import url
 from django.utils.safestring import mark_safe
 from django.urls import reverse
-from stark.service.v1 import StarkHandler, get_choice_text, get_m2m_text, StarkModelForm, Option
+from stark.service.subject import StarkHandler, get_choice_text, get_m2m_text, StarkModelForm, Option
 
 from web import models
 from .base import PermissionHandler

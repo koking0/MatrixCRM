@@ -24,7 +24,7 @@ SECRET_KEY = '4^s*s5-+csr@qa@c456gupo8cc$iq1x*w(rvn6ur9f25-svihr'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -116,14 +116,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILE_DIRS = [
-    os.path.join(BASE_DIR, "web/static")
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static")
 ]
 
 # ----------------------------------- 权限配置 -----------------------------------
 RBAC_USER_MODLE_CLASS = "web.models.UserInfo"
-PERMISSION_SESSION_KEY = "luffy_permission_url_list_key"
-MENU_SESSION_KEY = "luffy_permission_menu_key"
+PERMISSION_SESSION_KEY = "MatrixPermissionUrlListKey"
+MENU_SESSION_KEY = "MatrixPermissionMenuKey"
 
 AUTO_DISCOVER_EXCLUDE = [
     '/admin/.*',
@@ -133,12 +133,15 @@ AUTO_DISCOVER_EXCLUDE = [
 ]
 
 NO_PERMISSION_LIST = [
+    '/favicon.ico',
     '/index/',
+    '/static/',
     '/logout/',
 ]
 
 VALID_URL_LIST = [
     '/login/',
+    '/static/',
     '/admin/.*'
 ]
 

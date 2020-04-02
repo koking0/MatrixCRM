@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 from django.utils.safestring import mark_safe
 from django.urls import reverse
-from stark.service.v1 import StarkHandler, get_datetime_text, get_m2m_text, StarkModelForm, Option
+from stark.service.subject import StarkHandler, get_datetime_text, get_m2m_text, StarkModelForm, Option
 from stark.forms.widgets import DateTimePickerInput
 from web import models
 from .base import PermissionHandler

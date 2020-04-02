@@ -38,13 +38,12 @@ def multi_menu(request):
 
     for key in key_list:
         val = menu_dict[key]
-        val['class'] = 'hide'
+        val['class'] = 'nav-parent'
 
         for per in val['children']:
-
             if per['id'] == request.current_selected_permission:
-                per['class'] = 'active'
-                val['class'] = ''
+                per['class'] = 'nav-active'
+                val['class'] = 'nav-parent nav-expanded nav-active'
         ordered_dict[key] = val
 
     return {'menu_dict': ordered_dict}

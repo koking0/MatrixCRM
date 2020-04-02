@@ -5,7 +5,7 @@ from django.shortcuts import HttpResponse, render
 from django.utils.safestring import mark_safe
 from django.urls import reverse
 from django.forms.models import modelformset_factory
-from stark.service.v1 import StarkHandler, StarkModelForm, get_datetime_text
+from stark.service.subject import StarkHandler, StarkModelForm, get_datetime_text
 from web import models
 from .base import PermissionHandler
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 from django.conf.urls import url
-from stark.service.v1 import StarkHandler, StarkModelForm
+from stark.service.subject import StarkHandler, StarkModelForm
 from web import models
 from .base import PermissionHandler
 
